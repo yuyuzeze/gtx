@@ -52,9 +52,6 @@ async def fetch_amazon_product(url):
         "viewport-width": "400"
     }
 
-    cookie_file = "amazon_cookies.json"
-    with open(cookie_file, "r") as f:
-        amazon_cookies = json.loads(f.read())
     proxy = os.getenv('http_proxy')
         
     # 使用代理发送请求
@@ -64,8 +61,9 @@ async def fetch_amazon_product(url):
                     url,
                     params=params, 
                     headers=headers, 
-                    cookies=amazon_cookies,
-                    proxy=proxy) as response:
+                    cookies=amazon_cookies) as response:
+                    # 使用代理
+                    #proxy=proxy) as response:
                 if response.status == 200:
                     return await response.text()
                 else:
