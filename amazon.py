@@ -19,13 +19,6 @@ def get_urls():
     return urls
 
 async def fetch_amazon_product(url):
-    params = {
-        "linkCode": "sl1",
-        "tag": "twm1a4080-22",
-        "linkId": "387fac7c4d0581478539f94f3afea1ff",
-        "language": "ja_JP",
-        "ref_": "as_li_ss_tl"
-    }
     headers = {
         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
         "accept-language": "en-US,en;q=0.9",
@@ -59,7 +52,6 @@ async def fetch_amazon_product(url):
         try:
             async with session.get(
                     url,
-                    params=params, 
                     headers=headers, 
                     cookies=amazon_cookies,                    
                     proxy=proxy) as response: # 使用代理
