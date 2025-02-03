@@ -5,6 +5,12 @@ import os
 from notify import send
 from bs4 import BeautifulSoup
 
+def load_cookies():
+    global amazon_cookies
+    cookie_file = "amazon_cookies.json"
+    with open(cookie_file, "r") as f:
+        amazon_cookies = json.loads(f.read())
+
 def get_urls():
     urls_str = os.getenv('amazon_urls', '')
     
@@ -69,10 +75,12 @@ async def fetch_amazon_product(url):
             print(f"发生错误：{str(e)}")
             return None
 
-URLS = get_urls()
+
 
 async def main():
-    for url in URLS:
+    urls = get_urls()
+    load_cookies()
+    for url in urls:
         result = await fetch_amazon_product(url)
         if result:
             print("请求成功！")
