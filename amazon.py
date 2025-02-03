@@ -71,24 +71,28 @@ async def fetch_amazon_product(url):
         except Exception as e:
             print(f"发生错误：{str(e)}")
             return None
-
-
-
+        
+        
 async def main():
     urls = get_urls()
     load_cookies()
+    # 创建所有任务
+    tasks = []
     for url in urls:
-        result = await fetch_amazon_product(url)
-        if result:
-            print("请求成功！")
-            soup = BeautifulSoup(result, 'html.parser')
-            try:
+        task = asyncio.create_task(fetch_amazon_product(url))
+        tasks.append(task)
+    
+    # 并发执行
+    for task in asyncio.as_completed(tasks):
+        try:
+            result = await task
+            if result:
+                print("请求成功！")
+                soup = BeautifulSoup(result, 'html.parser')
                 add_to_cart_element = soup.find('input', {'id': 'add-to-cart-button'})
 
                 if add_to_cart_element:
                     product_title = soup.find('meta', attrs={'name': 'title'})['content']
-                    
-                    # 发送通知
                     send(
                         title='🎯 Amazon 发现目标商品！',
                         content=f'''## {product_title}
@@ -102,10 +106,9 @@ async def main():
                     print("已发送库存通知")
                 else:
                     print("商品暂无库存")
-                
-            except Exception as e:
-                print(f"检查库存时出错: {str(e)}")
-    
+        except Exception as e:
+            print(f"检查库存时出错: {str(e)}")
+
 if __name__ == "__main__":
     asyncio.run(main())
 
