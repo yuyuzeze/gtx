@@ -47,10 +47,18 @@ async def fetch_amazon_product(url):
     }
 
     amazon_cookies = json.loads(os.environ.get("AMAZON_COOKIES", "{}"))
-    
+    # 获取青龙代理配置
+    proxy = os.getenv('http_proxy')
+        
+    # 使用代理发送请求
     async with aiohttp.ClientSession() as session:
         try:
-            async with session.get(url, params=params, headers=headers, cookies=amazon_cookies) as response:
+            async with session.get(
+                    url,
+                    params=params, 
+                    headers=headers, 
+                    cookies=amazon_cookies,
+                    proxy=proxy) as response:
                 if response.status == 200:
                     return await response.text()
                 else:
@@ -75,12 +83,14 @@ async def main():
                     
                     # 发送通知
                     send(
-                        title='Amazon 发现目标商品！',
-                        content=f'''商品名: {product_title}  
-商品链接: [点击购买]({url})
+                        title='🎯 Amazon 发现目标商品！',
+                        content=f'''## {product_title}
+
+> **直达链接：**
+> [点击购买]({url})
 
 ---
-原始链接: {url}'''
+原始链接：{url}'''
                     )
                     print("已发送库存通知")
                 else:
