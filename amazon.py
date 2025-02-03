@@ -61,8 +61,8 @@ async def fetch_amazon_product(url):
                     url,
                     params=params, 
                     headers=headers, 
-                    cookies=amazon_cookies,                    
-                    proxy=proxy) as response: # 使用代理
+                    cookies=amazon_cookies) as response:           
+                    #proxy=proxy) as response: # 使用代理
                 if response.status == 200:
                     return await response.text()
                 else:
