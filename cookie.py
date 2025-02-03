@@ -5,7 +5,7 @@ import os
 def update_amazon_cookies():
     try:
         # 获取CookieCloud数据
-        cookie_cloud = PyCookieCloud('https://cookiecloud.ddsrem.com', 'sYpzgkTvGpQvJjBkgSTpZZ', 'u3Sd9YPe8EX4iBq4vKg6in')
+        cookie_cloud = PyCookieCloud(os.environ.get("cookie_cloud_url"), os.environ.get("cookie_cloud_uuid"), os.environ.get("cookie_cloud_pwd"))
         decrypted_data = cookie_cloud.get_decrypted_data()
         
         # 提取amazon.co.jp的cookies

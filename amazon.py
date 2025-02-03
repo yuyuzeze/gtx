@@ -46,7 +46,7 @@ async def fetch_amazon_product(url):
         "viewport-width": "400"
     }
 
-    amazon_cookies = json.loads(os.environ.get("AMAZON_COOKIES", "{}"))
+    amazon_cookies = json.loads(os.environ.get("amazon_cookies", "{}"))
     # 获取青龙代理配置
     proxy = os.getenv('http_proxy')
         
@@ -78,6 +78,7 @@ async def main():
             soup = BeautifulSoup(result, 'html.parser')
             try:
                 add_to_cart_element = soup.find('input', {'id': 'add-to-cart-button'})
+
                 if add_to_cart_element:
                     product_title = soup.find('meta', attrs={'name': 'title'})['content']
                     
