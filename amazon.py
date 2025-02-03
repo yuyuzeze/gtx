@@ -46,8 +46,9 @@ async def fetch_amazon_product(url):
         "viewport-width": "400"
     }
 
-    amazon_cookies = json.loads(os.environ.get("amazon_cookies", "{}"))
-    # 获取青龙代理配置
+    cookie_file = "amazon_cookies.json"
+    with open(cookie_file, "r") as f:
+        amazon_cookies = json.loads(f.read())
     proxy = os.getenv('http_proxy')
         
     # 使用代理发送请求

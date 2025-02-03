@@ -14,18 +14,20 @@ def update_amazon_cookies():
             for cookie in decrypted_data["amazon.co.jp"]:
                 amazon_cookies[cookie['name']] = cookie['value']
         
-        # 将cookies保存到环境变量
+        # 将cookies保存到文件
         if amazon_cookies:
             cookie_str = json.dumps(amazon_cookies)
-            os.environ["amazon_cookies"] = cookie_str
-            print("Amazon cookies 更新成功！")
+            cookie_file = "amazon_cookies.json"
+            with open(cookie_file, "w") as f:
+                f.write(cookie_str)
+            print(f"Cookies 已保存到 {cookie_file}")
             return True
         else:
             print("未找到 Amazon cookies！")
             return False
             
     except Exception as e:
-        print(f"更新 cookies 时发生错误: {str(e)}")
+        print(f"保存 cookies 时发生错误: {str(e)}")
         return False
 
 if __name__ == "__main__":
