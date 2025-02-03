@@ -5,8 +5,6 @@ import os
 from notify import send
 from bs4 import BeautifulSoup
 
-URLS = get_urls()
-
 def get_urls():
     urls_str = os.getenv('amazon_urls', '')
     
@@ -62,14 +60,14 @@ async def fetch_amazon_product(url):
             print(f"发生错误：{str(e)}")
             return None
 
+URLS = get_urls()
+
 async def main():
     for url in URLS:
         result = await fetch_amazon_product(url)
         if result:
             print("请求成功！")
             soup = BeautifulSoup(result, 'html.parser')
-            
-            print(product_title)
             try:
                 add_to_cart_element = soup.find('input', {'id': 'add-to-cart-button'})
                 if add_to_cart_element:
