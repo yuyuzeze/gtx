@@ -2,9 +2,19 @@ import aiohttp
 import asyncio
 import json
 import os
+from notify import send
+from bs4 import BeautifulSoup
 
-async def fetch_amazon_product():
-    url = "https://www.amazon.co.jp/gp/product/B0BSLJ52ZF"
+URLS = get_urls()
+
+def get_urls():
+    urls_str = os.getenv('amazon_urls', '')
+    
+    # 使用换行符分割 URL
+    urls = [url.strip() for url in urls_str.split('\n') if url.strip()]
+    return urls
+
+async def fetch_amazon_product(url):
     params = {
         "linkCode": "sl1",
         "tag": "twm1a4080-22",
@@ -53,10 +63,33 @@ async def fetch_amazon_product():
             return None
 
 async def main():
-    result = await fetch_amazon_product()
-    if result:
-        print("请求成功！")
-        # 这里可以添加处理响应数据的代码
+    for url in URLS:
+        result = await fetch_amazon_product(url)
+        if result:
+            print("请求成功！")
+            soup = BeautifulSoup(result, 'html.parser')
+            
+            print(product_title)
+            try:
+                add_to_cart_element = soup.find('input', {'id': 'add-to-cart-button'})
+                if add_to_cart_element:
+                    product_title = soup.find('meta', attrs={'name': 'title'})['content']
+                    
+                    # 发送通知
+                    await send(
+                        title='Amazon 发现目标商品！',
+                        content=f'''商品名: {product_title}
+                                    商品链接: [点击购买]({url})
+
+                                    ---
+                                    原始链接: {url}'''
+                                                )
+                    print("已发送库存通知")
+                else:
+                    print("商品暂无库存")
+                
+            except Exception as e:
+                print(f"检查库存时出错: {str(e)}")
     
 if __name__ == "__main__":
     asyncio.run(main())
