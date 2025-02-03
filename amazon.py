@@ -74,14 +74,14 @@ async def main():
                     product_title = soup.find('meta', attrs={'name': 'title'})['content']
                     
                     # 发送通知
-                    await send(
+                    send(
                         title='Amazon 发现目标商品！',
-                        content=f'''商品名: {product_title}
-                                    商品链接: [点击购买]({url})
+                        content=f'''商品名: {product_title}  
+商品链接: [点击购买]({url})
 
-                                    ---
-                                    原始链接: {url}'''
-                                                )
+---
+原始链接: {url}'''
+                    )
                     print("已发送库存通知")
                 else:
                     print("商品暂无库存")
