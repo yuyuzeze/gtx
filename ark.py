@@ -55,7 +55,7 @@ if __name__ == "__main__":
             if item['stock']:
                 print("商品已上库存：",item['item_name'])
                 send(
-                        title='🎯 ツクモ 发现目标商品！',
+                        title='🎯 ark 发现目标商品！',
                         content=f'''## {item['item_name']}
 价格：{item['price']}
 
