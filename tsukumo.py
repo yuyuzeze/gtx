@@ -13,7 +13,7 @@ def get_proxy():
     #随机选择一个ip
     url = random.choice(urls)
     #获取ip地址并打印
-    response = requests.get("https://api.ip.sb/ip")
+    response = requests.get("https://api.ipify.org", proxies={"http": url, "https": url} )
     print("代理ip地址：",response.text)
     return url
 
