@@ -22,10 +22,9 @@ def parse_gpu_data(bs):
     
     ul = bs.find('ul', class_='product-list')
     for item in ul.find_all('li', class_='mk2TagParm'):
-        name_ele = item.find('a', class_='mk2TagClick')
         maker_data = {
-            "name": name_ele.text.strip(),
-            "url": "https://www.kojima.co.jp" + name_ele['href']
+            "name": item['mk2pname'].strip(),
+            "url": "https://www.kojima.net" + item.find('a', class_='mk2TagClick')['href']
         }
         result.append(maker_data)
 
@@ -33,7 +32,7 @@ def parse_gpu_data(bs):
 
 def get_kojima_stock(url):
     proxy = get_proxy()
-    response = requests.get(url, proxies={"http": proxy, "https": proxy}) 
+    response = requests.get(url, proxies={"http": proxy, "https": proxy})
     bs = BeautifulSoup(response.text, 'html.parser')
     gpu_data = parse_gpu_data(bs)
     return gpu_data;
