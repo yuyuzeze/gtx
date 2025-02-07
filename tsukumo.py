@@ -62,7 +62,6 @@ def get_5090_details(stock_info):
 
 if __name__ == "__main__":
     url =  os.getenv('tsukumo_url', '')
-    #url = "https://shop.tsukumo.co.jp/features/rtx-50/"
     stock_info = get_tsukumo_stock(url)
     stock_info_last = None
     

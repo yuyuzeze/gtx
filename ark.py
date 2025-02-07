@@ -44,7 +44,6 @@ def get_ark_stock(url):
 
 if __name__ == "__main__":
     url =  os.getenv('ark_url', '')
-    #url = "https://www.ark-pc.co.jp/search/?category=c25&key=4060&search_target=on"
     stock_info = get_ark_stock(url)
     #空数组的话，打出没有库存
     if not stock_info:

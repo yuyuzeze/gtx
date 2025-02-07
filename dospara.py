@@ -44,15 +44,13 @@ if __name__ == "__main__":
     stock_info = get_dospara_stock(url)
 
     for item in stock_info:
-        print(item.name)
+        print(item['name'])
         send(
                     title='🎯 ドスパラ 发现目标商品！',
-                    content=f'''## {item.name}
+                    content=f'''## {item['name']}
 
 > **直达链接：**
-> [点击购买]({item.url})
+> [点击购买]({item['url']})
 
 ---'''
             )
-
-    
