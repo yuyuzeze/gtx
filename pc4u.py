@@ -23,11 +23,12 @@ def parse_gpu_data(bs):
     list_ele = bs.find('div', class_='big-item-list')
     for item in list_ele.find_all('div', class_='big-item-list__item'):
         name_ele = item.select_one('.big-item-list__name a')
-        item_data = {
-            "name": name_ele.text.strip(),
-            "url": "https://www.pc4u.co.jp" + name_ele['href']
-        }
-        result.append(item_data)
+        if '5090' in name_ele.text.strip():
+            item_data = {
+                "name": name_ele.text.strip(),
+                "url": "https://www.pc4u.co.jp" + name_ele['href']
+            }
+            result.append(item_data)
 
     return result
 

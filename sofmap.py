@@ -23,11 +23,11 @@ def parse_gpu_data(bs):
     ul = bs.find('ul', id='change_style_list')
     for item in ul.find_all('li'):
         name_ele = item.find('a', class_='product_name')
-        maker_data = {
+        item_data = {
             "name": name_ele.text.strip(),
             "url": name_ele['href']
         }
-        result.append(maker_data)
+        result.append(item_data)
 
     return result
 

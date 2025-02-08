@@ -22,11 +22,11 @@ def parse_gpu_data(bs):
     
     ul = bs.find('ul', class_='product-list')
     for item in ul.find_all('li', class_='mk2TagParm'):
-        maker_data = {
+        item_data = {
             "name": item['mk2pname'].strip(),
             "url": "https://www.kojima.net" + item.find('a', class_='mk2TagClick')['href']
         }
-        result.append(maker_data)
+        result.append(item_data)
 
     return result
 

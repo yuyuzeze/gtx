@@ -24,11 +24,11 @@ def parse_gpu_data(bs):
             continue
         else:
             name_ele = item.find('h2', class_='p-products-all-item-product__name__text')
-            maker_data = {
+            item_data = {
                 "name": name_ele.text.strip(),
                 "url": "https://www.dospara.co.jp" +name_ele.select_one('a')['href']
             }
-            result.append(maker_data)
+            result.append(item_data)
 
     return result
 
