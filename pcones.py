@@ -65,7 +65,7 @@ if __name__ == "__main__":
     for item in stock_info:
         print(item['name'])
         send(
-                    title='🎯 PCones 发现目标商品！',
+                    title='🎯 PC ONES 发现目标商品！',
                     content=f'''## {item['name']}
 
 > **直达链接：**
