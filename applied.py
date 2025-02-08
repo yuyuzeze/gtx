@@ -41,7 +41,7 @@ def get_applied_stock(url):
     return gpu_data;
 
 if __name__ == "__main__":
-    url =  os.getenv('sofmap_url', '')
+    url =  os.getenv('applied_url', '')
     stock_info = get_applied_stock(url)
 
     for item in stock_info:
